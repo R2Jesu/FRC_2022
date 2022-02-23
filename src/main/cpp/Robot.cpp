@@ -6,12 +6,19 @@
 
 #include <fmt/core.h>
 
-#include <frc/smartdashboard/SmartDashboard.h>
 
 void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+  //m_angleController1.SetTolerance(0.015);
+  //m_angleController2.SetTolerance(0.015);
+  //m_angleController3.SetTolerance(0.015);
+  //m_angleController4.SetTolerance(0.015);
+  m_angleController1.EnableContinuousInput(0.00, 360.00);
+  m_angleController2.EnableContinuousInput(0.00, 360.00);
+  m_angleController3.EnableContinuousInput(0.00, 360.00);
+  m_angleController4.EnableContinuousInput(0.00, 360.00);
 }
 
 /**

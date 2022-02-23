@@ -8,6 +8,7 @@
 
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/PS4Controller.h>
 #include <frc/controller/PIDController.h>
 #include <frc/motorcontrol/Spark.h>
@@ -68,8 +69,8 @@ class Robot : public frc::TimedRobot {
   double conversion = 360.0/3.3;
   double x=0, y=0, z=0;
   double correctionPID;
-  double LENGTH = 18.0;
-  double WIDTH = 21.75;
+  double LENGTH = 17.375;
+  double WIDTH = 21.25;
   double A=0.0;
 	double B=0.0;
 	double C=0.0;
@@ -83,9 +84,11 @@ class Robot : public frc::TimedRobot {
   double wSpeed4=0.0;
   double wAngle4=0.0;
   double R = sqrt((LENGTH*LENGTH) + (WIDTH*WIDTH));
-  double Ppid = 0.038;//45;
+  //double Ppid = 0.038;//45;
+  double Ppid = 0.02;
   double Ipid = 0.00;
-  double Dpid = 0.0010;//15;
+  double Dpid = 0.0018;
+  //double Dpid = 0.0010;//15;
   double pidOutput1 = 0;
   double pidOutput2 = 0;
   double pidOutput3 = 0;
