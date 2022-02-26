@@ -84,11 +84,9 @@ class Robot : public frc::TimedRobot {
   double wSpeed4=0.0;
   double wAngle4=0.0;
   double R = sqrt((LENGTH*LENGTH) + (WIDTH*WIDTH));
-  //double Ppid = 0.038;//45;
-  double Ppid = 0.02;
+  double Ppid = 0.050;//45;
   double Ipid = 0.00;
-  double Dpid = 0.0018;
-  //double Dpid = 0.0010;//15;
+  double Dpid = 0.0005;//10;//15;
   double pidOutput1 = 0;
   double pidOutput2 = 0;
   double pidOutput3 = 0;

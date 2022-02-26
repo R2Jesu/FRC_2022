@@ -7,6 +7,24 @@ void Robot::R2Jesu_Drive(void)
     y = m_Drivestick.GetRightY() * -1;
     z = m_Drivestick.GetLeftX();
 
+    if (fabs(x) < 0.1)
+    {
+        x = 0;
+    }
+
+    if (fabs(y) < 0.1)
+    {
+        y = 0;
+    }
+
+    if (fabs(z) < 0.1)
+    {
+        z = 0;
+    }
+
+    frc::SmartDashboard::PutNumber("x", x);
+    frc::SmartDashboard::PutNumber("y", y);
+    frc::SmartDashboard::PutNumber("z", z);
 
     A = y - z*(LENGTH/R);
 	B = y + z*(LENGTH/R);
@@ -20,32 +38,12 @@ void Robot::R2Jesu_Drive(void)
         wAngle1 = wAngle1 + 360;
     }
 
-    /*if (wAngle1 >= 0.0 && wAngle1 < 5.00)
-    {
-        wAngle1 = 1.0;
-    }
-
-    if (wAngle1 <= 360.0 && wAngle1 > 355.0)
-    {
-        wAngle1 = 359.0;
-    } */
-
 	wSpeed2 = .25*(sqrt(B*B + D*D));
 	wAngle2 = atan2(B,D) * 180/M_PI;
     if (wAngle2 < 0.0)
     {
         wAngle2 = wAngle2 + 360;
     }
-
-    /*if (wAngle2 >= 0.0 && wAngle2 < 5.00)
-    {
-        wAngle2 = 1.0;
-    }
-
-    if (wAngle2 <= 360.0 && wAngle2 > 355.0)
-    {
-        wAngle2 = 359.0;
-    } */
 
 	wSpeed3 = .25*(sqrt(A*A + D*D));
 	wAngle3 = atan2(A,D) * 180/M_PI;
@@ -54,16 +52,6 @@ void Robot::R2Jesu_Drive(void)
         wAngle3 = wAngle3 + 360;
     }
 
-    /*if (wAngle3 >= 0.0 && wAngle3 < 5.00)
-    {
-        wAngle3 = 1.0;
-    }
-
-    if (wAngle3 <= 360.0 && wAngle3 > 355.0)
-    {
-        wAngle3 = 359.0;
-    } */
-
 	wSpeed4 = .25*(sqrt(A*A + C*C));
 	wAngle4 = atan2(A,C) * 180/M_PI;
     if (wAngle4 < 0.0)
@@ -71,16 +59,6 @@ void Robot::R2Jesu_Drive(void)
         wAngle4 = wAngle4 + 360;
     }
 
-   /* if (wAngle4 >= 0.0 && wAngle4 < 5.00)
-    {
-        wAngle4 = 1.0;
-    }
-
-    if (wAngle4 <= 360.0 && wAngle4 > 355.0)
-    {
-        wAngle4 = 359.0;
-    } */
-  
     if (fabs(x) > 0.1 || fabs(y) > 0.1 || fabs(z) > 0.1)
     {
         m_SwerveDrive1.Set(wSpeed1);
@@ -123,6 +101,7 @@ void Robot::R2Jesu_Drive(void)
     frc::SmartDashboard::PutNumber("Desired Angle 2",wAngle2);
     frc::SmartDashboard::PutNumber("Desired Angle 3",wAngle3);
     frc::SmartDashboard::PutNumber("Desired Angle 4",wAngle4);
+
 
 
 }

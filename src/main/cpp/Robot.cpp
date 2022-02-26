@@ -19,6 +19,10 @@ void Robot::RobotInit() {
   m_angleController2.EnableContinuousInput(0.00, 360.00);
   m_angleController3.EnableContinuousInput(0.00, 360.00);
   m_angleController4.EnableContinuousInput(0.00, 360.00);
+
+  frc::SmartDashboard::PutNumber("Ppid",Ppid);
+  frc::SmartDashboard::PutNumber("Ipid",Ipid);
+  frc::SmartDashboard::PutNumber("Dpid",Dpid);
 }
 
 /**
@@ -29,7 +33,14 @@ void Robot::RobotInit() {
  * <p> This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic() {
+
+Ppid = frc::SmartDashboard::GetNumber("Ppid",0.0);
+Ipid = frc::SmartDashboard::GetNumber("Ipid",0.0);
+Dpid = frc::SmartDashboard::GetNumber("Dpid",0.0);
+
+}
+
 
 /**
  * This autonomous (along with the chooser code above) shows how to select
