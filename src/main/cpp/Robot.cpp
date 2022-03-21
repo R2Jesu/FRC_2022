@@ -11,10 +11,7 @@ void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
-  //m_angleController1.SetTolerance(0.015);
-  //m_angleController2.SetTolerance(0.015);
-  //m_angleController3.SetTolerance(0.015);
-  //m_angleController4.SetTolerance(0.015);
+
   m_angleController1.EnableContinuousInput(0.00, 360.00);
   m_angleController2.EnableContinuousInput(0.00, 360.00);
   m_angleController3.EnableContinuousInput(0.00, 360.00);
@@ -23,6 +20,8 @@ void Robot::RobotInit() {
   frc::SmartDashboard::PutNumber("Ppid",Ppid);
   frc::SmartDashboard::PutNumber("Ipid",Ipid);
   frc::SmartDashboard::PutNumber("Dpid",Dpid);
+  isTripped = false;
+  wasPressed = false;
 }
 
 /**
@@ -35,9 +34,98 @@ void Robot::RobotInit() {
  */
 void Robot::RobotPeriodic() {
 
-Ppid = frc::SmartDashboard::GetNumber("Ppid",0.0);
-Ipid = frc::SmartDashboard::GetNumber("Ipid",0.0);
-Dpid = frc::SmartDashboard::GetNumber("Dpid",0.0);
+//Ppid = frc::SmartDashboard::GetNumber("Ppid",0.0);
+//Ipid = frc::SmartDashboard::GetNumber("Ipid",0.0);
+//Dpid = frc::SmartDashboard::GetNumber("Dpid",0.0);
+/*if (m_Operatorstick.GetR2Axis() > 0.0)
+{
+  printf("R2axis active\n");
+}
+if (m_Operatorstick.GetR2ButtonPressed())
+{
+  printf("R2Button active\n");
+}
+if (m_Operatorstick.GetR3ButtonPressed())
+{
+  printf("R3Button active\n");
+}
+if (m_Operatorstick.GetRightX() > 0.0)
+{
+  printf("RightX active\n");
+}
+if (m_Operatorstick.GetRightY() > 0.0)
+{
+  printf("RightY active\n");
+}
+if (m_Operatorstick.GetShareButtonPressed())
+{
+  printf("Share Active\n");
+}
+if (m_Operatorstick.GetSquareButtonPressed())
+{
+  printf("Square active\n");
+}
+if (m_Operatorstick.GetTouchpadPressed())
+{
+  printf("touchpad active\n");
+}
+if (m_Operatorstick.GetTriangleButtonPressed())
+{
+  printf("Triangle active\n");
+}
+if (m_Operatorstick.GetCircleButtonPressed())
+{
+  printf("Circle active\n");
+}
+if (m_Operatorstick.GetCrossButtonPressed())
+{
+  printf("Cross active\n");
+}
+if (m_Operatorstick.GetL1ButtonPressed())
+{
+  printf("L1 active\n");
+}
+if (m_Operatorstick.GetL2ButtonPressed())
+{
+  printf("L2 active\n");
+}
+if (m_Operatorstick.GetL3ButtonPressed())
+{
+  printf("L3 active\n");
+}
+if (m_Operatorstick.GetOptionsButtonPressed())
+{
+  printf("Options active\n");
+}
+if (m_Operatorstick.GetPSButtonPressed())
+{
+  printf("PSbutton active\n");
+}
+if (m_Operatorstick.GetR1ButtonPressed())
+{
+  printf("R1 active\n");
+}
+if (m_Operatorstick.GetLeftX() > 0.0)
+{
+  printf("LeftX active\n");
+}
+if (m_Operatorstick.GetLeftY() > 0.0)
+{
+  printf("LeftY active\n");
+}
+if (m_Operatorstick.GetL2Axis() > 0.0)
+{
+  printf("L2Axis active\n");
+}
+if (m_Operatorstick.GetRightX() > 0.0)
+{
+  printf("RightX Active\n");
+}
+if (m_Operatorstick.GetRightY() > 0.0)
+{
+  printf("RightY active\n");
+}*/
+
 
 }
 
@@ -74,12 +162,17 @@ void Robot::AutonomousPeriodic() {
   }
 }
 
-void Robot::TeleopInit() {}
+void Robot::TeleopInit() 
+{
+    isTripped = false;
+    wasPressed = false;
+}
 
 void Robot::TeleopPeriodic() 
 {
   R2Jesu_Intake();
   R2Jesu_Drive();
+  R2Jesu_IndexerShooter();
   frc::SmartDashboard::PutNumber("speed2", wSpeed2);
 }
 

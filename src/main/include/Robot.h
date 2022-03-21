@@ -19,6 +19,7 @@
 #include <ctre/Phoenix.h>
 #include <cmath>
 #include <frc/AnalogInput.h>
+#include <frc/DigitalInput.h>
 
 class Robot : public frc::TimedRobot {
  public:
@@ -36,36 +37,41 @@ class Robot : public frc::TimedRobot {
  private:
   void R2Jesu_Drive(void);
   void R2Jesu_Intake(void);
+  void R2Jesu_IndexerShooter(void);
   frc::SendableChooser<std::string> m_chooser;
   const std::string kAutoNameDefault = "Default";
   const std::string kAutoNameCustom = "My Auto";
   std::string m_autoSelected;
+  
+  // Swerve Drive 
   frc::PS4Controller m_Drivestick{0};
+  frc::PS4Controller m_Operatorstick{1};
+  
   //swerve 1 front left
   rev::CANSparkMax m_SwerveDrive1{5, rev::CANSparkMax::MotorType::kBrushless};
   rev::SparkMaxRelativeEncoder m_DriveEncoder1 = m_SwerveDrive1.GetEncoder();
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_SwerveTurn1{1};
-  // rev::SparkMaxAnalogSensor m_SwerveAnalog1 = m_SwerveDrive1.GetAnalog();
   frc::AnalogInput m_SwerveAnalog1{0};
+  
   //swerve 2
   rev::CANSparkMax m_SwerveDrive2{6, rev::CANSparkMax::MotorType::kBrushless};
   rev::SparkMaxRelativeEncoder m_DriveEncoder2 = m_SwerveDrive2.GetEncoder();
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_SwerveTurn2{2};
-  //rev::SparkMaxAnalogSensor m_SwerveAnalog2 = m_SwerveDrive2.GetAnalog();
   frc::AnalogInput m_SwerveAnalog2{1};
+  
   //swerve 3
   rev::CANSparkMax m_SwerveDrive3{7, rev::CANSparkMax::MotorType::kBrushless};
   rev::SparkMaxRelativeEncoder m_DriveEncoder3 = m_SwerveDrive3.GetEncoder();
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_SwerveTurn3{3};
-  //rev::SparkMaxAnalogSensor m_SwerveAnalog3 = m_SwerveDrive3.GetAnalog();
   frc::AnalogInput m_SwerveAnalog3{2};
+  
   //swerve 4
   rev::CANSparkMax m_SwerveDrive4{8, rev::CANSparkMax::MotorType::kBrushless};
   rev::SparkMaxRelativeEncoder m_DriveEncoder4 = m_SwerveDrive4.GetEncoder();
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_SwerveTurn4{4};
-  //rev::SparkMaxAnalogSensor m_SwerveAnalog4 = m_SwerveDrive4.GetAnalog();
   frc::AnalogInput m_SwerveAnalog4{3};
 
+  //Swerve control variables
   double conversion = 360.0/3.3;
   double x=0, y=0, z=0;
   double correctionPID;
@@ -97,5 +103,23 @@ class Robot : public frc::TimedRobot {
   frc2::PIDController m_angleController4{ Ppid , Ipid, Dpid, 20_ms};
 
   //intake
-  frc::Spark m_intake{8};
+  ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_intake{12};
+
+  //Indexer
+  ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_indexer1{10};
+  ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_indexer2{11};
+  frc::DigitalInput indexerPhotocell{9};
+  bool isTripped = false;
+  bool wasPressed = false;
+
+  //Shooter
+  rev::CANSparkMax m_shooter{9, rev::CANSparkMax::MotorType::kBrushless};
+  double shooterPpid = 0.00030;
+  double shooterIpid = 0.0005;
+  double shooterDpid = 0.0000;
+  frc2::PIDController m_shooterController{ shooterPpid , shooterIpid, shooterDpid, 20_ms};
+  rev::SparkMaxRelativeEncoder m_shooterEncoder = m_shooter.GetEncoder();
+  double shooterPidOutput = 0.0;
+  double desiredRPM = 0.0;
+
 };
