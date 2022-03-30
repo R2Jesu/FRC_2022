@@ -22,6 +22,11 @@ void Robot::RobotInit() {
   frc::SmartDashboard::PutNumber("Dpid",Dpid);
   isTripped = false;
   wasPressed = false;
+
+  compressorObject.Start();
+  m_indexer1.Set(0.0);
+  m_indexer2.Set(0.0);
+  m_shooter.Set(0.0);
 }
 
 /**
@@ -37,7 +42,7 @@ void Robot::RobotPeriodic() {
 //Ppid = frc::SmartDashboard::GetNumber("Ppid",0.0);
 //Ipid = frc::SmartDashboard::GetNumber("Ipid",0.0);
 //Dpid = frc::SmartDashboard::GetNumber("Dpid",0.0);
-/*if (m_Operatorstick.GetR2Axis() > 0.0)
+if (m_Operatorstick.GetR2Axis() > 0.0)
 {
   printf("R2axis active\n");
 }
@@ -124,7 +129,7 @@ if (m_Operatorstick.GetRightX() > 0.0)
 if (m_Operatorstick.GetRightY() > 0.0)
 {
   printf("RightY active\n");
-}*/
+}
 
 
 }
@@ -142,6 +147,10 @@ if (m_Operatorstick.GetRightY() > 0.0)
  * make sure to add them to the chooser code above as well.
  */
 void Robot::AutonomousInit() {
+  printf("auto Init\n");
+  m_indexer1.Set(0.0);
+  m_indexer2.Set(0.0);
+  m_shooter.Set(0.0);
   m_autoSelected = m_chooser.GetSelected();
   // m_autoSelected = SmartDashboard::GetString("Auto Selector",
   //     kAutoNameDefault);
@@ -152,9 +161,20 @@ void Robot::AutonomousInit() {
   } else {
     // Default Auto goes here
   }
+  m_DriveEncoder1.SetPosition(0.0);
+  m_DriveEncoder2.SetPosition(0.0);
+  m_DriveEncoder3.SetPosition(0.0);
+  m_DriveEncoder4.SetPosition(0.0);
+  m_SwerveDrive1.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  m_SwerveDrive2.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  m_SwerveDrive3.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  m_SwerveDrive4.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  R2Jesu_Autonomous();
 }
 
 void Robot::AutonomousPeriodic() {
+  printf("Auto periodic\n");
+  printf("velo %f", m_shooterEncoder.GetVelocity());
   if (m_autoSelected == kAutoNameCustom) {
     // Custom Auto goes here
   } else {
@@ -164,14 +184,34 @@ void Robot::AutonomousPeriodic() {
 
 void Robot::TeleopInit() 
 {
+  printf("Tele Init\n");
+  m_indexer1.Set(0.0);
+  m_indexer2.Set(0.0);
+  m_shooter.Set(0.0);
+  desiredRPM = 0.0;
     isTripped = false;
     wasPressed = false;
+    m_SwerveDrive1.Set(0.0);
+    m_SwerveDrive2.Set(0.0);
+    m_SwerveDrive3.Set(0.0);
+    m_SwerveDrive4.Set(0.0);
+    m_SwerveTurn1.Set(0.0);
+    m_SwerveTurn2.Set(0.0);
+    m_SwerveTurn3.Set(0.0);
+    m_SwerveTurn4.Set(0.0);
+  m_SwerveDrive1.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  m_SwerveDrive2.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  m_SwerveDrive3.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  m_SwerveDrive4.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+
 }
 
 void Robot::TeleopPeriodic() 
 {
+  printf("Tele Periodic\n");
   R2Jesu_Intake();
   R2Jesu_Drive();
+  R2Jesu_Hanger();
   R2Jesu_IndexerShooter();
   frc::SmartDashboard::PutNumber("speed2", wSpeed2);
 }

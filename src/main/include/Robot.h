@@ -20,6 +20,11 @@
 #include <cmath>
 #include <frc/AnalogInput.h>
 #include <frc/DigitalInput.h>
+#include <frc/Compressor.h>
+#include <frc/DoubleSolenoid.h>
+#include <frc/PneumaticsModuleType.h>
+#include <chrono>
+#include <thread>
 
 class Robot : public frc::TimedRobot {
  public:
@@ -37,11 +42,14 @@ class Robot : public frc::TimedRobot {
  private:
   void R2Jesu_Drive(void);
   void R2Jesu_Intake(void);
+  void R2Jesu_Hanger(void);
   void R2Jesu_IndexerShooter(void);
+  void R2Jesu_Autonomous(void);
   frc::SendableChooser<std::string> m_chooser;
   const std::string kAutoNameDefault = "Default";
   const std::string kAutoNameCustom = "My Auto";
   std::string m_autoSelected;
+  frc::Compressor compressorObject{frc::PneumaticsModuleType::CTREPCM};
   
   // Swerve Drive 
   frc::PS4Controller m_Drivestick{0};
@@ -104,6 +112,7 @@ class Robot : public frc::TimedRobot {
 
   //intake
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_intake{12};
+  frc::DoubleSolenoid intakePneumatics{frc::PneumaticsModuleType::CTREPCM,4,5};
 
   //Indexer
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_indexer1{10};
@@ -121,5 +130,14 @@ class Robot : public frc::TimedRobot {
   rev::SparkMaxRelativeEncoder m_shooterEncoder = m_shooter.GetEncoder();
   double shooterPidOutput = 0.0;
   double desiredRPM = 0.0;
+
+  //Hanger
+  rev::CANSparkMax m_HangerLeft{13, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax m_HangerRight{14, rev::CANSparkMax::MotorType::kBrushless};
+  frc::DoubleSolenoid hangerPneumatics{frc::PneumaticsModuleType::CTREPCM, 6, 7};
+  frc::DigitalInput leftLimit{7};
+  frc::DigitalInput rightLimit{8};
+
+  //autonomous
 
 };
