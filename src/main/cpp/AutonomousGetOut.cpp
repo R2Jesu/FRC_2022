@@ -1,6 +1,4 @@
 #include "Robot.h"
-double autoSpeed = .15;
-double shSpeed = 0.0;
 
 void Robot::R2Jesu_AutonomousGetOut(void)
 {

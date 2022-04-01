@@ -26,7 +26,6 @@
 #include <chrono>
 #include <thread>
 #include <cameraserver/CameraServer.h>
-//#include <GripPipeline.h>
 
 class Robot : public frc::TimedRobot {
  public:
@@ -146,6 +145,8 @@ class Robot : public frc::TimedRobot {
   frc::DigitalInput rightLimit{8};
 
   //autonomous
+  double autoSpeed = .15;
+  double shSpeed = 0.0;
 
   //camera
   cs::UsbCamera drvCamera;

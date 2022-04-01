@@ -1,12 +1,9 @@
 #include "Robot.h"
-double autoSpeed = .15;
-double shSpeed = 0.0;
 
 void Robot::R2Jesu_Autonomous(void)
 {
     intakePneumatics.Set(frc::DoubleSolenoid::Value::kForward);
     m_intake.Set(0.4);
-    printf("while start\n");
     std::this_thread::sleep_for(std::chrono::seconds(1));
     while (m_DriveEncoder1.GetPosition() < 10.0)
     {
