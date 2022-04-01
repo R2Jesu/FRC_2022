@@ -25,6 +25,8 @@
 #include <frc/PneumaticsModuleType.h>
 #include <chrono>
 #include <thread>
+#include <cameraserver/CameraServer.h>
+//#include <GripPipeline.h>
 
 class Robot : public frc::TimedRobot {
  public:
@@ -140,4 +142,6 @@ class Robot : public frc::TimedRobot {
 
   //autonomous
 
+  //camera
+  cs::UsbCamera drvCamera;
 };

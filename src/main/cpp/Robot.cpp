@@ -27,6 +27,11 @@ void Robot::RobotInit() {
   m_indexer1.Set(0.0);
   m_indexer2.Set(0.0);
   m_shooter.Set(0.0);
+
+  //camera
+  drvCamera = frc::CameraServer::GetInstance()->StartAutomaticCapture(0);
+  drvCamera.SetResolution(320, 240);
+  drvCamera.SetFPS(15);
 }
 
 /**
