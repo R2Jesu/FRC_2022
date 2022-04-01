@@ -47,9 +47,14 @@ class Robot : public frc::TimedRobot {
   void R2Jesu_Hanger(void);
   void R2Jesu_IndexerShooter(void);
   void R2Jesu_Autonomous(void);
+  void R2Jesu_AutonomousGetOut(void);
+  void R2Jesu_AutonomousWaitGetOut(void);
+  void R2Jesu_AutonomousShootGetOut(void);
   frc::SendableChooser<std::string> m_chooser;
-  const std::string kAutoNameDefault = "Default";
-  const std::string kAutoNameCustom = "My Auto";
+  const std::string kAutoOriginal = "Original Auto";
+  const std::string kAutoGetOut = "Get Out";
+  const std::string kAutoShootGetOut = "Shoot and Get Out";
+  const std::string kAutoWaitGetOut = "Wait and Get Out";
   std::string m_autoSelected;
   frc::Compressor compressorObject{frc::PneumaticsModuleType::CTREPCM};
   

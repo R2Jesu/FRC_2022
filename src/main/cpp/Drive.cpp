@@ -22,9 +22,9 @@ void Robot::R2Jesu_Drive(void)
         z = 0;
     }
 
-    frc::SmartDashboard::PutNumber("x", x);
-    frc::SmartDashboard::PutNumber("y", y);
-    frc::SmartDashboard::PutNumber("z", z);
+    //frc::SmartDashboard::PutNumber("x", x);
+    //frc::SmartDashboard::PutNumber("y", y);
+    //frc::SmartDashboard::PutNumber("z", z);
 
     A = y - z*(LENGTH/R);
 	B = y + z*(LENGTH/R);
@@ -92,6 +92,7 @@ void Robot::R2Jesu_Drive(void)
         m_SwerveDrive4.Set(0.0);
         m_SwerveTurn4.Set(0.0);
     }
+    /*
     frc::SmartDashboard::PutNumber("Wheel 1",(m_SwerveAnalog1.GetVoltage() * conversion));
     frc::SmartDashboard::PutNumber("Wheel 2",(m_SwerveAnalog2.GetVoltage() * conversion));
     frc::SmartDashboard::PutNumber("Wheel 3",(m_SwerveAnalog3.GetVoltage() * conversion));
@@ -101,7 +102,6 @@ void Robot::R2Jesu_Drive(void)
     frc::SmartDashboard::PutNumber("Desired Angle 2",wAngle2);
     frc::SmartDashboard::PutNumber("Desired Angle 3",wAngle3);
     frc::SmartDashboard::PutNumber("Desired Angle 4",wAngle4);
-
-
+    */
 
 }

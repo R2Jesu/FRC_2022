@@ -25,7 +25,7 @@ void Robot::R2Jesu_Autonomous(void)
         m_SwerveDrive4.Set(autoSpeed);
         pidOutput4 = m_angleController4.Calculate((m_SwerveAnalog4.GetVoltage() * conversion), 90.0);
         m_SwerveTurn4.Set(pidOutput4);
-        frc::SmartDashboard::PutNumber("position", m_DriveEncoder1.GetPosition());
+        //frc::SmartDashboard::PutNumber("position", m_DriveEncoder1.GetPosition());
     }
     m_SwerveDrive1.Set(0.0);
     m_SwerveDrive2.Set(0.0);
@@ -56,7 +56,7 @@ void Robot::R2Jesu_Autonomous(void)
         m_SwerveDrive4.Set(autoSpeed);
         pidOutput4 = m_angleController4.Calculate((m_SwerveAnalog4.GetVoltage() * conversion), 90.0);
         m_SwerveTurn4.Set(pidOutput4);
-        frc::SmartDashboard::PutNumber("position", m_DriveEncoder1.GetPosition());
+        //frc::SmartDashboard::PutNumber("position", m_DriveEncoder1.GetPosition());
 
     }
     
@@ -144,7 +144,7 @@ void Robot::R2Jesu_Autonomous(void)
     {
         shSpeed = shSpeed + 0.001;
         m_shooter.Set(shSpeed);
-        printf("velo in while %f", m_shooterEncoder.GetVelocity());
+        //printf("velo in while %f", m_shooterEncoder.GetVelocity());
     }
     m_indexer1.Set(1.0);
     m_indexer2.Set(1.0);
