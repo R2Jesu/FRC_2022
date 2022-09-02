@@ -26,6 +26,7 @@
 #include <chrono>
 #include <thread>
 #include <cameraserver/CameraServer.h>
+#include <frc/DriverStation.h>
 
 class Robot : public frc::TimedRobot {
  public:

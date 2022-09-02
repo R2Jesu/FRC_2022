@@ -2,17 +2,18 @@
 
 void Robot::R2Jesu_AutonomousShootGetOut(void)
 {
-    desiredRPM = 2000.0;
-    shSpeed = 0.01;
-    while (m_shooterEncoder.GetVelocity() < desiredRPM)
+    desiredRPM = 910.0;
+    shSpeed = 0.001;
+    while ((m_shooterEncoder.GetVelocity() < desiredRPM) && frc::DriverStation::IsAutonomousEnabled())
     {
-        shSpeed = shSpeed + 0.001;
+        shSpeed = shSpeed + 0.0001;
         m_shooter.Set(shSpeed);
     }
     m_indexer1.Set(1.0);
     m_indexer2.Set(1.0);
+    std::this_thread::sleep_for(std::chrono::seconds(3));
 
-    while (m_DriveEncoder1.GetPosition() < 60.0)
+    while (m_DriveEncoder1.GetPosition() < 43.0 && frc::DriverStation::IsAutonomousEnabled())
     {
         m_SwerveDrive1.Set(autoSpeed);
         pidOutput1 = m_angleController1.Calculate((m_SwerveAnalog1.GetVoltage() * conversion), 90.0);

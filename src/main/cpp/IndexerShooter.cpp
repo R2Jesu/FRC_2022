@@ -63,7 +63,7 @@ void Robot::R2Jesu_IndexerShooter(void)
             m_shooter.Set(0.0);
         }
     }
-    frc::SmartDashboard::PutNumber("desired RPM", desiredRPM);
-    frc::SmartDashboard::PutNumber("shooter velocity", m_shooterEncoder.GetVelocity());
-    frc::SmartDashboard::PutNumber("pid output", shooterPidOutput);
+    //frc::SmartDashboard::PutNumber("desired RPM", desiredRPM);
+    //frc::SmartDashboard::PutNumber("shooter velocity", m_shooterEncoder.GetVelocity());
+    //frc::SmartDashboard::PutNumber("pid output", shooterPidOutput);
 }

@@ -4,7 +4,7 @@ void Robot::R2Jesu_AutonomousWaitGetOut(void)
 {
 
     std::this_thread::sleep_for(std::chrono::seconds(10));
-    while (m_DriveEncoder1.GetPosition() < 40.0)
+    while (m_DriveEncoder1.GetPosition() < 40.0 && frc::DriverStation::IsAutonomousEnabled())
     {
         m_SwerveDrive1.Set(autoSpeed);
         pidOutput1 = m_angleController1.Calculate((m_SwerveAnalog1.GetVoltage() * conversion), 90.0);

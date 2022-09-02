@@ -6,8 +6,8 @@ void Robot::R2Jesu_Hanger(void)
     //m_HangerRight.Set(.1);
     if (m_Drivestick.GetR1Button())
         {
-            m_HangerLeft.Set(.25);
-            m_HangerRight.Set(.25);
+            m_HangerLeft.Set(.4);
+            m_HangerRight.Set(.4);
         }
         else if (m_Drivestick.GetL2Axis() > 0.0)
         {

@@ -31,28 +31,28 @@ void Robot::R2Jesu_Drive(void)
 	C = x - z*(WIDTH/R);
 	D = x + z*(WIDTH/R);
 
-	wSpeed1 = .25*(sqrt(B*B + C*C));
+	wSpeed1 = .4*(sqrt(B*B + C*C));
 	wAngle1 = atan2(B,C) * 180/M_PI; 
     if (wAngle1 < 0.0)
     {
         wAngle1 = wAngle1 + 360;
     }
 
-	wSpeed2 = .25*(sqrt(B*B + D*D));
+	wSpeed2 = .4*(sqrt(B*B + D*D));
 	wAngle2 = atan2(B,D) * 180/M_PI;
     if (wAngle2 < 0.0)
     {
         wAngle2 = wAngle2 + 360;
     }
 
-	wSpeed3 = .25*(sqrt(A*A + D*D));
+	wSpeed3 = .4*(sqrt(A*A + D*D));
 	wAngle3 = atan2(A,D) * 180/M_PI;
     if (wAngle3 < 0.0)
     {
         wAngle3 = wAngle3 + 360;
     }
 
-	wSpeed4 = .25*(sqrt(A*A + C*C));
+	wSpeed4 = .4*(sqrt(A*A + C*C));
 	wAngle4 = atan2(A,C) * 180/M_PI;
     if (wAngle4 < 0.0)
     {
