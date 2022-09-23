@@ -10,8 +10,9 @@
 void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoOriginal, kAutoOriginal);
   m_chooser.AddOption(kAutoGetOut, kAutoGetOut);
-  m_chooser.AddOption(kAutoWaitGetOut, kAutoGetOut);
+  m_chooser.AddOption(kAutoWaitGetOut, kAutoWaitGetOut);
   m_chooser.AddOption(kAutoShootGetOut, kAutoShootGetOut);
+  m_chooser.AddOption(kAutoSelfish, kAutoSelfish);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
   m_angleController1.EnableContinuousInput(0.00, 360.00);
@@ -31,9 +32,10 @@ void Robot::RobotInit() {
   m_shooter.Set(0.0);
 
   //camera
-  drvCamera = frc::CameraServer::StartAutomaticCapture(0);
+  drvCamera = frc::CameraServer::StartAutomaticCapture();
   drvCamera.SetResolution(320, 240);
   drvCamera.SetFPS(15);
+  drvCamera.SetExposureManual(40);
 }
 
 /**
@@ -161,7 +163,7 @@ void Robot::AutonomousInit() {
   m_autoSelected = m_chooser.GetSelected();
   // m_autoSelected = SmartDashboard::GetString("Auto Selector",
   //     kAutoNameDefault);
-  fmt::print("Auto selected: {}\n", m_autoSelected);
+  printf("Auto selected: %s\n", m_autoSelected);
 
   //if (m_autoSelected == kAutoNameCustom) {
     // Custom Auto goes here
@@ -191,6 +193,10 @@ void Robot::AutonomousInit() {
   else if (m_autoSelected == kAutoShootGetOut)
   {
     R2Jesu_AutonomousShootGetOut();
+  }
+  else if (m_autoSelected == kAutoSelfish)
+  {
+    R2Jesu_AutonomousSelfish();
   }
   else
   {
@@ -234,6 +240,7 @@ void Robot::TeleopPeriodic()
   R2Jesu_Drive();
   R2Jesu_Hanger();
   R2Jesu_IndexerShooter();
+  frc::SmartDashboard::PutNumber("shooter speed", m_shooterEncoder.GetVelocity());
   //frc::SmartDashboard::PutNumber("speed2", wSpeed2);
 }
 

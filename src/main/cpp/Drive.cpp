@@ -30,29 +30,35 @@ void Robot::R2Jesu_Drive(void)
 	B = y + z*(LENGTH/R);
 	C = x - z*(WIDTH/R);
 	D = x + z*(WIDTH/R);
-
-	wSpeed1 = .4*(sqrt(B*B + C*C));
+    if (z != 0)
+    {
+        speedChoice = turnSpeed;
+    } else
+    {
+        speedChoice = fullSpeed;
+    }
+	wSpeed1 = speedChoice * (sqrt(B*B + C*C));
 	wAngle1 = atan2(B,C) * 180/M_PI; 
     if (wAngle1 < 0.0)
     {
         wAngle1 = wAngle1 + 360;
     }
 
-	wSpeed2 = .4*(sqrt(B*B + D*D));
+	wSpeed2 = speedChoice * (sqrt(B*B + D*D));
 	wAngle2 = atan2(B,D) * 180/M_PI;
     if (wAngle2 < 0.0)
     {
         wAngle2 = wAngle2 + 360;
     }
 
-	wSpeed3 = .4*(sqrt(A*A + D*D));
+	wSpeed3 = speedChoice*(sqrt(A*A + D*D));
 	wAngle3 = atan2(A,D) * 180/M_PI;
     if (wAngle3 < 0.0)
     {
         wAngle3 = wAngle3 + 360;
     }
 
-	wSpeed4 = .4*(sqrt(A*A + C*C));
+	wSpeed4 = speedChoice*(sqrt(A*A + C*C));
 	wAngle4 = atan2(A,C) * 180/M_PI;
     if (wAngle4 < 0.0)
     {
@@ -61,6 +67,7 @@ void Robot::R2Jesu_Drive(void)
 
     if (fabs(x) > 0.1 || fabs(y) > 0.1 || fabs(z) > 0.1)
     {
+        
         m_SwerveDrive1.Set(wSpeed1);
         pidOutput1 = m_angleController1.Calculate((m_SwerveAnalog1.GetVoltage() * conversion), wAngle1);
         m_SwerveTurn1.Set(pidOutput1);

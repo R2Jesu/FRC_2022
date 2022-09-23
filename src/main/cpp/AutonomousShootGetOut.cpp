@@ -2,6 +2,7 @@
 
 void Robot::R2Jesu_AutonomousShootGetOut(void)
 {
+    printf("auto selected: shoot get out");
     desiredRPM = 910.0;
     shSpeed = 0.001;
     while ((m_shooterEncoder.GetVelocity() < desiredRPM) && frc::DriverStation::IsAutonomousEnabled())

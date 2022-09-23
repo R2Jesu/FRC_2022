@@ -27,6 +27,7 @@
 #include <thread>
 #include <cameraserver/CameraServer.h>
 #include <frc/DriverStation.h>
+#include <cscore_oo.h>
 
 class Robot : public frc::TimedRobot {
  public:
@@ -50,11 +51,13 @@ class Robot : public frc::TimedRobot {
   void R2Jesu_AutonomousGetOut(void);
   void R2Jesu_AutonomousWaitGetOut(void);
   void R2Jesu_AutonomousShootGetOut(void);
+  void R2Jesu_AutonomousSelfish(void);
   frc::SendableChooser<std::string> m_chooser;
   const std::string kAutoOriginal = "Original Auto";
   const std::string kAutoGetOut = "Get Out";
   const std::string kAutoShootGetOut = "Shoot and Get Out";
   const std::string kAutoWaitGetOut = "Wait and Get Out";
+  const std::string kAutoSelfish = "Selfish Auto";
   std::string m_autoSelected;
   frc::Compressor compressorObject{frc::PneumaticsModuleType::CTREPCM};
   
@@ -116,7 +119,9 @@ class Robot : public frc::TimedRobot {
   frc2::PIDController m_angleController2{ Ppid , Ipid, Dpid, 20_ms};
   frc2::PIDController m_angleController3{ Ppid , Ipid, Dpid, 20_ms};
   frc2::PIDController m_angleController4{ Ppid , Ipid, Dpid, 20_ms};
-
+  double fullSpeed = .6;
+  double turnSpeed = .35;
+  double speedChoice;
   //intake
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_intake{12};
   frc::DoubleSolenoid intakePneumatics{frc::PneumaticsModuleType::CTREPCM,4,5};
