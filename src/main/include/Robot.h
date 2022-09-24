@@ -113,7 +113,7 @@ class Robot : public frc::TimedRobot {
   double wAngle4=0.0;
   double R = sqrt((LENGTH*LENGTH) + (WIDTH*WIDTH));
   double Ppid = 0.050;//45;
-  double Ipid = 0.0005;
+  double Ipid = 0.000;
   double Dpid = 0.001;//0.0008;//.0005
   double pidOutput1 = 0.0;
   double pidOutput2 = 0.0;
