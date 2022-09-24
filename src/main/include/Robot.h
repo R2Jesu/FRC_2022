@@ -91,7 +91,11 @@ class Robot : public frc::TimedRobot {
 
   //Swerve control variables
   double conversion = 360.0/3.3;
-  double x=0, y=0, z=0;
+  double conversion1 = 360.0/3.235;
+  double conversion2 = 360.0/3.265;
+  double conversion3 = 360.0/3.275;
+  double conversion4 = 360.0/3.275;
+  double x=0.0, y=0.0, z=0.0;
   double correctionPID;
   double LENGTH = 17.375;
   double WIDTH = 21.25;
@@ -109,12 +113,12 @@ class Robot : public frc::TimedRobot {
   double wAngle4=0.0;
   double R = sqrt((LENGTH*LENGTH) + (WIDTH*WIDTH));
   double Ppid = 0.050;//45;
-  double Ipid = 0.00;
-  double Dpid = 0.0005;//10;//15;
-  double pidOutput1 = 0;
-  double pidOutput2 = 0;
-  double pidOutput3 = 0;
-  double pidOutput4 = 0;
+  double Ipid = 0.0005;
+  double Dpid = 0.001;//0.0008;//.0005
+  double pidOutput1 = 0.0;
+  double pidOutput2 = 0.0;
+  double pidOutput3 = 0.0;
+  double pidOutput4 = 0.0;
   frc2::PIDController m_angleController1{ Ppid , Ipid, Dpid, 20_ms};
   frc2::PIDController m_angleController2{ Ppid , Ipid, Dpid, 20_ms};
   frc2::PIDController m_angleController3{ Ppid , Ipid, Dpid, 20_ms};

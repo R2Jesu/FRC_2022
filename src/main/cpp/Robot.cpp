@@ -163,7 +163,7 @@ void Robot::AutonomousInit() {
   m_autoSelected = m_chooser.GetSelected();
   // m_autoSelected = SmartDashboard::GetString("Auto Selector",
   //     kAutoNameDefault);
-  printf("Auto selected: %s\n", m_autoSelected);
+  //printf("Auto selected: %s\n", m_autoSelected);
 
   //if (m_autoSelected == kAutoNameCustom) {
     // Custom Auto goes here
