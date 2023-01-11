@@ -26,7 +26,8 @@
 #include <chrono>
 #include <thread>
 #include <cameraserver/CameraServer.h>
-//#include <GripPipeline.h>
+#include <frc/DriverStation.h>
+#include <cscore_oo.h>
 
 class Robot : public frc::TimedRobot {
  public:
@@ -47,9 +48,18 @@ class Robot : public frc::TimedRobot {
   void R2Jesu_Hanger(void);
   void R2Jesu_IndexerShooter(void);
   void R2Jesu_Autonomous(void);
+  void R2Jesu_AutonomousGetOut(void);
+  void R2Jesu_AutonomousWaitGetOut(void);
+  void R2Jesu_AutonomousShootGetOut(void);
+  void R2Jesu_AutonomousSelfish(void);
+  void R2Jesu_AutonomousGRC(void);
   frc::SendableChooser<std::string> m_chooser;
-  const std::string kAutoNameDefault = "Default";
-  const std::string kAutoNameCustom = "My Auto";
+  const std::string kAutoOriginal = "Original Auto";
+  const std::string kAutoGetOut = "Get Out";
+  const std::string kAutoShootGetOut = "Shoot and Get Out";
+  const std::string kAutoWaitGetOut = "Wait and Get Out";
+  const std::string kAutoSelfish = "Selfish Auto";
+  const std::string kAutoGRC = "GRC Auto";
   std::string m_autoSelected;
   frc::Compressor compressorObject{frc::PneumaticsModuleType::CTREPCM};
   
@@ -83,7 +93,11 @@ class Robot : public frc::TimedRobot {
 
   //Swerve control variables
   double conversion = 360.0/3.3;
-  double x=0, y=0, z=0;
+  double conversion1 = 360.0/3.235;
+  double conversion2 = 360.0/3.265;
+  double conversion3 = 360.0/3.275;
+  double conversion4 = 360.0/3.275;
+  double x=0.0, y=0.0, z=0.0;
   double correctionPID;
   double LENGTH = 17.375;
   double WIDTH = 21.25;
@@ -101,17 +115,19 @@ class Robot : public frc::TimedRobot {
   double wAngle4=0.0;
   double R = sqrt((LENGTH*LENGTH) + (WIDTH*WIDTH));
   double Ppid = 0.050;//45;
-  double Ipid = 0.00;
-  double Dpid = 0.0005;//10;//15;
-  double pidOutput1 = 0;
-  double pidOutput2 = 0;
-  double pidOutput3 = 0;
-  double pidOutput4 = 0;
+  double Ipid = 0.000;
+  double Dpid = 0.001;//0.0008;//.0005
+  double pidOutput1 = 0.0;
+  double pidOutput2 = 0.0;
+  double pidOutput3 = 0.0;
+  double pidOutput4 = 0.0;
   frc2::PIDController m_angleController1{ Ppid , Ipid, Dpid, 20_ms};
   frc2::PIDController m_angleController2{ Ppid , Ipid, Dpid, 20_ms};
   frc2::PIDController m_angleController3{ Ppid , Ipid, Dpid, 20_ms};
   frc2::PIDController m_angleController4{ Ppid , Ipid, Dpid, 20_ms};
-
+  double fullSpeed = .6;
+  double turnSpeed = .35;
+  double speedChoice;
   //intake
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_intake{12};
   frc::DoubleSolenoid intakePneumatics{frc::PneumaticsModuleType::CTREPCM,4,5};
@@ -141,6 +157,8 @@ class Robot : public frc::TimedRobot {
   frc::DigitalInput rightLimit{8};
 
   //autonomous
+  double autoSpeed = .15;
+  double shSpeed = 0.0;
 
   //camera
   cs::UsbCamera drvCamera;

@@ -11,6 +11,6 @@ void Robot::R2Jesu_Intake(void)
     if (m_Operatorstick.GetRightX() > 0.0) 
     {
         intakePneumatics.Set(frc::DoubleSolenoid::Value::kForward);
-        m_intake.Set(0.4);
+        m_intake.Set(0.5);
     }
 }

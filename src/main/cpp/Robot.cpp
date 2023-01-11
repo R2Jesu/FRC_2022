@@ -1,15 +1,18 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
+// the WPILib BSD license file in the root directory of this project.comp
 #include "Robot.h"
 
 #include <fmt/core.h>
 
 
 void Robot::RobotInit() {
-  m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
-  m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
+  m_chooser.SetDefaultOption(kAutoOriginal, kAutoOriginal);
+  m_chooser.AddOption(kAutoGetOut, kAutoGetOut);
+  m_chooser.AddOption(kAutoWaitGetOut, kAutoWaitGetOut);
+  m_chooser.AddOption(kAutoShootGetOut, kAutoShootGetOut);
+  m_chooser.AddOption(kAutoSelfish, kAutoSelfish);
+  m_chooser.AddOption(kAutoGRC, kAutoGRC);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
   m_angleController1.EnableContinuousInput(0.00, 360.00);
@@ -17,21 +20,22 @@ void Robot::RobotInit() {
   m_angleController3.EnableContinuousInput(0.00, 360.00);
   m_angleController4.EnableContinuousInput(0.00, 360.00);
 
-  frc::SmartDashboard::PutNumber("Ppid",Ppid);
-  frc::SmartDashboard::PutNumber("Ipid",Ipid);
-  frc::SmartDashboard::PutNumber("Dpid",Dpid);
+  //frc::SmartDashboard::PutNumber("Ppid",Ppid);
+  //frc::SmartDashboard::PutNumber("Ipid",Ipid);
+  //frc::SmartDashboard::PutNumber("Dpid",Dpid);
   isTripped = false;
   wasPressed = false;
 
-  compressorObject.Start();
+  compressorObject.EnableDigital();
   m_indexer1.Set(0.0);
   m_indexer2.Set(0.0);
   m_shooter.Set(0.0);
 
   //camera
-  drvCamera = frc::CameraServer::GetInstance()->StartAutomaticCapture(0);
+  drvCamera = frc::CameraServer::StartAutomaticCapture();
   drvCamera.SetResolution(320, 240);
   drvCamera.SetFPS(15);
+  drvCamera.SetExposureManual(40);
 }
 
 /**
@@ -47,7 +51,7 @@ void Robot::RobotPeriodic() {
 //Ppid = frc::SmartDashboard::GetNumber("Ppid",0.0);
 //Ipid = frc::SmartDashboard::GetNumber("Ipid",0.0);
 //Dpid = frc::SmartDashboard::GetNumber("Dpid",0.0);
-if (m_Operatorstick.GetR2Axis() > 0.0)
+/*if (m_Operatorstick.GetR2Axis() > 0.0)
 {
   printf("R2axis active\n");
 }
@@ -134,7 +138,7 @@ if (m_Operatorstick.GetRightX() > 0.0)
 if (m_Operatorstick.GetRightY() > 0.0)
 {
   printf("RightY active\n");
-}
+}*/
 
 
 }
@@ -152,20 +156,20 @@ if (m_Operatorstick.GetRightY() > 0.0)
  * make sure to add them to the chooser code above as well.
  */
 void Robot::AutonomousInit() {
-  printf("auto Init\n");
+
   m_indexer1.Set(0.0);
   m_indexer2.Set(0.0);
   m_shooter.Set(0.0);
   m_autoSelected = m_chooser.GetSelected();
   // m_autoSelected = SmartDashboard::GetString("Auto Selector",
   //     kAutoNameDefault);
-  fmt::print("Auto selected: {}\n", m_autoSelected);
+  //printf("Auto selected: %s\n", m_autoSelected);
 
-  if (m_autoSelected == kAutoNameCustom) {
+  //if (m_autoSelected == kAutoNameCustom) {
     // Custom Auto goes here
-  } else {
+  //} else {
     // Default Auto goes here
-  }
+  //}
   m_DriveEncoder1.SetPosition(0.0);
   m_DriveEncoder2.SetPosition(0.0);
   m_DriveEncoder3.SetPosition(0.0);
@@ -174,22 +178,44 @@ void Robot::AutonomousInit() {
   m_SwerveDrive2.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
   m_SwerveDrive3.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
   m_SwerveDrive4.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-  R2Jesu_Autonomous();
+  if (m_autoSelected == kAutoOriginal)
+  {
+    R2Jesu_Autonomous();
+  }
+  else if (m_autoSelected == kAutoGetOut)
+  {
+    R2Jesu_AutonomousGetOut();
+  }
+  else if (m_autoSelected == kAutoWaitGetOut)
+  {
+    R2Jesu_AutonomousWaitGetOut();
+  }
+  else if (m_autoSelected == kAutoShootGetOut)
+  {
+    R2Jesu_AutonomousShootGetOut();
+  }
+  else if (m_autoSelected == kAutoSelfish)
+  {
+    R2Jesu_AutonomousSelfish();
+  }
+  else if (m_autoSelected == kAutoGRC)
+  {
+    R2Jesu_AutonomousGRC();
+  }
+  else
+  {
+    R2Jesu_Autonomous();
+  }
+  
 }
 
 void Robot::AutonomousPeriodic() {
-  printf("Auto periodic\n");
-  printf("velo %f", m_shooterEncoder.GetVelocity());
-  if (m_autoSelected == kAutoNameCustom) {
-    // Custom Auto goes here
-  } else {
-    // Default Auto goes here
-  }
+
 }
 
 void Robot::TeleopInit() 
 {
-  printf("Tele Init\n");
+  //printf("Tele Init\n");
   m_indexer1.Set(0.0);
   m_indexer2.Set(0.0);
   m_shooter.Set(0.0);
@@ -213,12 +239,13 @@ void Robot::TeleopInit()
 
 void Robot::TeleopPeriodic() 
 {
-  printf("Tele Periodic\n");
+  //printf("Tele Periodic\n");
   R2Jesu_Intake();
   R2Jesu_Drive();
   R2Jesu_Hanger();
   R2Jesu_IndexerShooter();
-  frc::SmartDashboard::PutNumber("speed2", wSpeed2);
+  frc::SmartDashboard::PutNumber("shooter speed", m_shooterEncoder.GetVelocity());
+  //frc::SmartDashboard::PutNumber("speed2", wSpeed2);
 }
 
 void Robot::DisabledInit() {}
