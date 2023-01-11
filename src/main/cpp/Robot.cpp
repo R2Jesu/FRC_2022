@@ -1,7 +1,6 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
+// the WPILib BSD license file in the root directory of this project.comp
 #include "Robot.h"
 
 #include <fmt/core.h>
@@ -13,6 +12,7 @@ void Robot::RobotInit() {
   m_chooser.AddOption(kAutoWaitGetOut, kAutoWaitGetOut);
   m_chooser.AddOption(kAutoShootGetOut, kAutoShootGetOut);
   m_chooser.AddOption(kAutoSelfish, kAutoSelfish);
+  m_chooser.AddOption(kAutoGRC, kAutoGRC);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
   m_angleController1.EnableContinuousInput(0.00, 360.00);
@@ -197,6 +197,10 @@ void Robot::AutonomousInit() {
   else if (m_autoSelected == kAutoSelfish)
   {
     R2Jesu_AutonomousSelfish();
+  }
+  else if (m_autoSelected == kAutoGRC)
+  {
+    R2Jesu_AutonomousGRC();
   }
   else
   {

@@ -48,9 +48,11 @@ void Robot::R2Jesu_AutonomousSelfish(void)
     m_intake.Set(0);
     intakePneumatics.Set(frc::DoubleSolenoid::Value::kReverse);
 
-    while (m_DriveEncoder1.GetPosition() < 55.0 && frc::DriverStation::IsAutonomousEnabled())
+    
+
+    while (m_DriveEncoder1.GetPosition() < 28.0 && frc::DriverStation::IsAutonomousEnabled())
     {
-        pidOutput1 = m_angleController1.Calculate((m_SwerveAnalog1.GetVoltage() * conversion1), 270.0);
+        pidOutput1 = m_angleController1.Calculate((m_SwerveAnalog1.GetVoltage() * conversion1), 275.0);
         m_SwerveTurn1.Set(pidOutput1);
         m_SwerveDrive1.Set(autoSpeed);
         frc::SmartDashboard::PutNumber("Wheel 1 Voltage", m_SwerveAnalog1.GetVoltage());
@@ -68,7 +70,7 @@ void Robot::R2Jesu_AutonomousSelfish(void)
         frc::SmartDashboard::PutNumber("Wheel 3 Voltage", m_SwerveAnalog3.GetVoltage());
         frc::SmartDashboard::PutNumber("Wheel 3 Angle", (m_SwerveAnalog3.GetVoltage()*conversion3));
 
-        pidOutput4 = m_angleController4.Calculate((m_SwerveAnalog4.GetVoltage() * conversion4), 270.0);
+        pidOutput4 = m_angleController4.Calculate((m_SwerveAnalog4.GetVoltage() * conversion4), 275.0);
         m_SwerveTurn4.Set(pidOutput4);
         m_SwerveDrive4.Set(autoSpeed);
         frc::SmartDashboard::PutNumber("Wheel 4 Voltage", m_SwerveAnalog4.GetVoltage());
@@ -90,7 +92,7 @@ void Robot::R2Jesu_AutonomousSelfish(void)
     m_DriveEncoder4.SetPosition(0.0);
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    while (m_DriveEncoder1.GetPosition() < 42.0 && frc::DriverStation::IsAutonomousEnabled())
+    while (m_DriveEncoder1.GetPosition() < 34.0 && frc::DriverStation::IsAutonomousEnabled())
     {
         m_SwerveDrive1.Set(autoSpeed);
         pidOutput1 = m_angleController1.Calculate((m_SwerveAnalog1.GetVoltage() * conversion1), 270.0);
